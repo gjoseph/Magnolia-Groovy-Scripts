@@ -1,5 +1,7 @@
 This is a collection of scripts written in Groovy that may (or may not) be useful when working with Magnolia CMS.
 
+There are already some script samples at http://wiki.magnolia-cms.com/display/WIKI/Groovy+Shell+Scripts - feel free to extract them an request a pull to add them here !
+
 http://magnolia-cms.org
 http://documentation.magnolia-cms.com/modules/groovy.html
 http://groovy.codehaus.org 
