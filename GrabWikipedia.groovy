@@ -1,8 +1,9 @@
+import info.magnolia.cms.core.Content
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.jsoup.safety.Whitelist
 import static info.magnolia.nodebuilder.Ops.*
-import info.magnolia.cms.core.Content
 
 /**
  * Grabs and filters content of Wikipedia, and creates Magnolia pages off of it.
@@ -69,8 +70,14 @@ class GrabWikipedia {
         content.select(".references-small").remove()
         content.select(".editsection").remove()
         content.select("div").remove()
+        // remove headings, we really just want lots of text ...
+        content.select("h1,h2,h3,h4,h5,h6").remove()
 
-        return [title: title, content: content.html(), url:url]
+        // yeah, this clean is kind of redundant, re-parsing the document ...
+        def text = Jsoup.clean(content.html(), Whitelist.simpleText().addTags("p")).trim();
+        // addTags("h1", "h2", "h3", "h4", "h5", "h6")
+
+        return [title: title, content: text, url: url]
     }
 
     def createPage(parent, pageName, title, htmlContent, sourceURL) {
